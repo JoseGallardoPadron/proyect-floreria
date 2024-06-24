@@ -1,0 +1,70 @@
+<h2 style="margin-top: 7px; padding-left: 25px; font-size: 30px; font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;" mat-dialog-title>
+  {{ data ? 'Actualizar Compra' : 'Nueva Compra' }}
+</h2>
+
+<div mat-dialog-content class="FormularioCompra">
+  <form [formGroup]="purchaseForm">
+    <div class="form-row">
+      <div class="form-column">
+        <mat-form-field appearance="outline" class="example-form-field">
+          <mat-label>ID de Proveedor</mat-label>
+          <mat-select formControlName="supplierId" id="supplierId">
+            <mat-option *ngFor="let supplier of proveedores" [value]="supplier.id">{{supplier.businessName}} {{supplier.type}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="example-form-field">
+          <mat-label>Tipo de Compra</mat-label>
+          <input matInput placeholder="Tipo de Compra" formControlName="type" id="type">
+          <mat-error *ngIf="purchaseForm.get('type')?.errors?.['required']">
+            Complete este campo por favor
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="example-form-field">
+          <mat-label>Método de Pago</mat-label>
+          <input matInput placeholder="Método de Pago" formControlName="payment" id="payment">
+          <mat-error *ngIf="purchaseForm.get('payment')?.errors?.['required']">
+            Complete este campo por favor
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div formArrayName="purchaseDetails">
+      <h2 style="margin-top: 20px; padding-left: 10px; font-size: 20px; font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;">
+        Detalles de la Compra
+      </h2> 
+      <div *ngFor="let detail of purchaseDetails.controls; let i = index" [formGroupName]="i" class="form-row detail-row">
+        <div class="form-column product-details" style="display: flex;">
+          <mat-form-field appearance="outline" class="example-form-field" style="margin-bottom: 10px; margin-right: 10px;">
+            <mat-label>ID de Producto</mat-label>
+            <mat-select formControlName="productId" [id]="'productId-' + i">
+              <mat-option *ngFor="let product of productos" [value]="product.id">{{product.names}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="example-form-field" style="margin-bottom: 10px; margin-right: 10px">
+            <mat-label>Cantidad</mat-label>
+            <input matInput placeholder="Cantidad" formControlName="amount" type="number" [id]="'amount-' + i">
+            <mat-error *ngIf="detail.get('amount')?.errors?.['required']">
+              Complete este campo por favor
+            </mat-error>
+          </mat-form-field>
+
+          <button mat-icon-button color="warn" (click)="removePurchaseDetail(i)" style="margin-bottom: 10px; align-content: center;">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </div>
+      </div>
+      <button mat-raised-button (click)="addPurchaseDetail()" style="margin-left: 10px; margin-top: 7px;">Añadir Producto</button>
+    </div>
+  </form>
+</div>
+
+<mat-dialog-actions style="padding-left: 450px; margin-bottom: 10px;">
+  <button mat-raised-button (click)="cancelar()">Cancelar</button>
+  <button mat-raised-button color="primary" (click)="savePurchase()">
+    {{ data ? 'Actualizar' : 'Registrar' }}
+  </button>
+</mat-dialog-actions>

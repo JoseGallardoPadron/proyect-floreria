@@ -1,0 +1,15 @@
+.form-row {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.form-column {
+  flex: 1;
+  padding: 0 10px;
+}
+
+.example-form-field {
+  width: 100%;
+  margin-top: 16px;
+}

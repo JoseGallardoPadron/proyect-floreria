@@ -1,0 +1,97 @@
+<h2 style=" margin-top: 7px; padding-left: 35px; font-size: 30px; font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;"
+  mat-dialog-title>{{ data ? 'Actualizar Cliente' : 'Nuevo Cliente'}}
+</h2>
+
+<div mat-dialog-content class="FormularioCliente">
+
+  <form  [formGroup]="personForm">
+    <div class="form-row">
+      <div class="form-column">
+
+        <mat-form-field appearance="outline" class="example-form-field">
+          <mat-label>Tipo Documento</mat-label>
+          <mat-select formControlName="typeDocument">
+            <mat-option value="DNI">DNI</mat-option>
+            <mat-option value="CNE">CNE</mat-option>
+          </mat-select>
+          <mat-error *ngIf="personForm.get('typeDocument')?.errors?.['required']">
+            Complete este campo por favor
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="example-form-field">
+          <mat-label>Nombres Completos</mat-label>
+          <input matInput placeholder="Nombres Completos" formControlName="names">
+          <mat-error *ngIf="personForm.get('names')?.errors?.['required']">
+            Complete este campo por favor
+          </mat-error>
+          <mat-error *ngIf="personForm.get('names')?.errors?.['onlyLetters']">
+            Solo se permite letras en este campo
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="example-form-field">
+          <mat-label>Correo Electrónico</mat-label>
+          <input matInput placeholder="Correo electronico" formControlName="email">
+          <mat-error *ngIf="personForm.get('email')?.errors?.['required']">
+            Complete este campo por favor
+          </mat-error>
+          <mat-error *ngIf="personForm.get('email')?.errors?.['email']">
+            El email no es valido
+          </mat-error>
+        </mat-form-field>
+
+      </div>
+
+      <div class="form-column">
+
+        <mat-form-field appearance="outline" class="example-form-field">
+          <mat-label>N° Documento</mat-label>
+          <input matInput placeholder="xxxxxxxx" formControlName="numberDocument">
+          <mat-error *ngIf="personForm.get('numberDocument')?.errors?.['required']">
+            Complete este campo por favor
+          </mat-error>
+          <mat-error *ngIf="personForm.get('numberDocument')?.errors?.['maxlength']">
+            Debe contener entre 8 - 15 caracteres
+          </mat-error>
+          <mat-error *ngIf="personForm.get('numberDocument')?.errors?.['minlength']">
+            Debe contener entre mas de 7 caracteres
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="example-form-field">
+          <mat-label>Apellidos</mat-label>
+          <input matInput placeholder="Apellidos Completos" formControlName="lastNames">
+          <mat-error *ngIf="personForm.get('lastNames')?.errors?.['required']">
+            Complete este campo por favor
+          </mat-error>
+          <mat-error *ngIf="personForm.get('lastNames')?.errors?.['onlyLetters']">
+            Solo se permite letras en este campo
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="example-form-field">
+          <mat-label>N° Telefónico</mat-label>
+          <input matInput placeholder="000 - 000 - 000" formControlName="cellPhone">
+          <mat-error *ngIf="personForm.get('cellPhone')?.errors?.['required']">
+            Complete este campo por favor
+          </mat-error>
+          <mat-error *ngIf="personForm.get('cellPhone')?.errors?.['maxlength']">
+            Debe contener 9 caracteres
+          </mat-error>
+          <mat-error *ngIf="personForm.get('cellPhone')?.errors?.['minlength']">
+            Debe contener 9 caracteres
+          </mat-error>
+        </mat-form-field>
+
+      </div>
+    </div>
+  </form>
+</div>
+
+<mat-dialog-actions style="padding-left: 35px; margin-bottom: 10px;">
+  <button mat-raised-button (click)="cancelar()">Cancelar</button>
+  <button mat-raised-button color="primary" (click)="savePerson()">
+    {{ data ? 'Actualizar' : 'Registrar'}}
+  </button>
+</mat-dialog-actions>
